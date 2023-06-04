@@ -1,9 +1,14 @@
 const express=require('express')
 const {connectToDB,getDb}=require('./db')
+
+
 // init app & middleware
 const app=express()
 
 // db connection 
+
+
+
 
 let db;
 
@@ -19,6 +24,19 @@ db=getDb()
 
 
 //routes
-app.get('/book',(req,res)=>{
-res.json({msg:'wlc to api'})
+app.get('/book',async(req,res)=>{
+    let books=[];
+db.collection('book')
+.find()
+.sort({title:1})
+.forEach(book => books.push(book))
+.then(()=>{
+res.status(200).json({
+    status:"success",
+    data:books
+});
+})
+//cursor 
+
+
 })
